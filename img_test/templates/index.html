@@ -1,0 +1,11 @@
+{% extends 'base.html'%}{% block content %}
+
+<h1 style="text-align: center;">画像表示アプリ</h1>
+
+<!-- pngをアップロードするフォーム -->
+<form action="/upload" method="post" enctype="multipart/form-data">
+<input type="file" name="img" accept="image/png">
+<input type="submit" value="送信">
+</form>
+
+{% endblock %}
