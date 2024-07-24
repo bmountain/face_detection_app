@@ -15,7 +15,7 @@ app.secret_key = 'usr'
 def index():
     return render_template('index.html')
         
-# ファイルのアップロードを行う
+# 画像ののアップロードを行う
 @app.route('/upload', methods=["POST"])
 def upload():
     # アップロードされた画像をバイトとして読み込む
@@ -34,7 +34,7 @@ def upload():
     # 表示サービスにリダイレクト
     return redirect(url_for('view'))
 
-# /videoにアクセスするとResponse(gen(Video))を返す
+# アップロードされた画像を表示
 @app.route('/view')
 def view():
     # セッションからパスとファイル名を取得
