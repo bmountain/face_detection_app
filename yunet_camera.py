@@ -4,8 +4,7 @@ import cv2
 weights = 'face_detection_yunet_2023mar.onnx'
 score_threshold = 0.7
 faceDetect = cv2.FaceDetectorYN.create(weights, '', (0, 0), score_threshold=score_threshold)
-# 画像パス
-img_path = 'laughing.png'
+
 # オーバーレイする画像のサイズのパラメタ
 fore_size = 1.4
 
@@ -19,7 +18,7 @@ def overlay(frame, fore, faces):
         fore_resized = cv2.resize(fore, dsize = None, fx = ratio, fy = ratio)
         fore_shape = fore_resized.shape
         # foreを表示する位置（左上の頂点）を計算
-        location = [int(face[0] + (1/2) * (face[3] - fore_shape[1])), int(face[1] + (1/2) * (face[2] - fore_shape[0]))]
+        location = (int(face[0] + (1/2) * (face[3] - fore_shape[1])), int(face[1] + (1/2) * (face[2] - fore_shape[0])))
         # アルファオーバーレイ
         x1, y1 = max(location[0], 0), max(location[1], 0)
         x2 = min(location[0] + fore_shape[1], frame_shape[1])
@@ -31,10 +30,10 @@ def overlay(frame, fore, faces):
 
 # カメラから画像を取得して顔を囲う枠を上書きするクラス
 class Video(object):
-    def __init__(self): 
+    def __init__(self, img): 
         # デフォルトのカメラを取得．
         self.video=cv2.VideoCapture(0)
-        self.fore = cv2.imread(img_path, cv2.IMREAD_UNCHANGED)
+        self.fore = img
     def __del__(self):
         # カメラを閉じる
         self.video.release()
@@ -60,11 +59,9 @@ class Video(object):
         # bounding boxの情報のみ抽出
         # face = (左上のx座標, 左上のy座標, 幅，高さ)
         faces = [list(map(int, face[:4])) for face in faces]
-        print('faces:', faces)
-        # 重ねる画像をロード
-        fore = self.fore
+        # print('faces:', faces)
         # 画像をオーバーレイ
-        overlay(frame, fore, faces)
+        overlay(frame, self.fore, faces)
         _, frame = cv2.imencode('.jpg', frame)
         # 画像(ndarray)をbyteに変換
         return frame.tobytes()
