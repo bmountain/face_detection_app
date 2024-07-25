@@ -1,10 +1,10 @@
 {% extends 'base.html'%}{% block content %}
 
-<h1 style="text-align: center;">顔認識アプリ</h1>
+<h1 style="text-align: center;">顔マスクアプリ</h1>
 <p>画像を選択してアップロードしてください</p>
 <form action="/upload" method="post" enctype="multipart/form-data">
     <input type="file" name="img" accept="image/png, image/jpeg">
-    <input type="submit" value="送信">
+    <input type="submit" value="決定">
 </form>
 
 {% endblock %}
