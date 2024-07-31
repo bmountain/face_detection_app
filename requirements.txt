@@ -1,1 +1,2 @@
-flask
+Flask
+gunicorn==19.9.0
