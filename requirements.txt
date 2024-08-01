@@ -2,3 +2,4 @@ Flask
 gunicorn
 opencv-python
 Pillow
+yunet_camera
